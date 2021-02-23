@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.fserv</groupId>
+	<artifactId>notification-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>notification-service</name>
+	<description>Notificaiton  service pom</description>
+	
+	<properties>
+		<!-- dependency properties -->
+		<log4j.version>1.2.17</log4j.version>
+		<log4j.slf4j.version>1.7.30</log4j.slf4j.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+
+		<project.build.timestamp>${maven.build.timestamp}</project.build.timestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssZ</maven.build.timestamp.format>
+		<compiler.source>1.8</compiler.source>
+		<compiler.target>1.8</compiler.target>
+		<pmd.ruleset>${project.basedir}/pmd.xml</pmd.ruleset>
+
+		<assembly.version>2.4</assembly.version>
+		<clean.version>2.5</clean.version>
+		<dependency.version>2.8</dependency.version>
+		<install.version>2.4</install.version>
+		<jar.version>2.4</jar.version>
+		<resources.version>2.6</resources.version>
+		<maven-compiler.version>3.6.0</maven-compiler.version>
+		<maven-war.version>2.6</maven-war.version>
+		<maven-surefire.version>2.19.1</maven-surefire.version>
+	</properties>
+	
+	<modules>
+		<module>notification-core</module>
+		<module>notification-api</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>4.3.5.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-releasetrain</artifactId>
+				<version>Hopper-SR6</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${log4j.slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.kuali.maven.wagons</groupId>
+				<artifactId>maven-s3-wagon</artifactId>
+				<version>1.2.1</version>
+			</extension>
+			<!-- <extension> <groupId>org.springframework.build</groupId> <artifactId>aws-maven</artifactId> 
+				<version>5.0.0.RELEASE</version> </extension> -->
+		</extensions>
+	</build>
+
+
+	<distributionManagement>
+		<site>
+			<id>s3.site</id>
+			<url>s3://repo.4serv.team/site</url>
+		</site>
+		<repository>
+			<id>s3.release</id>
+			<url>s3://repo.4serv.team/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>s3.snapshot</id>
+			<url>s3://repo.4serv.team/snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>s3.snapshot</id>
+			<url>s3://repo.4serv.team/snapshot</url>
+		</repository>
+	</repositories>
+
+</project>
